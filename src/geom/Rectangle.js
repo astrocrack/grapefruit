@@ -11,7 +11,7 @@ var inherit = require('../utils/inherit'),
  * top-left corner point (x, y) and by its width and its height.
  *
  * @class Rectangle
- * @constructor 
+ * @constructor
  * @param x {Number} The X coord of the upper-left corner of the rectangle
  * @param y {Number} The Y coord of the upper-left corner of the rectangle
  * @param width {Number} The overall wisth of this rectangle
@@ -140,9 +140,9 @@ inherit(Rectangle, Object, {
 
         return new Polygon(this.x - pos.x, this.y - pos.y, [
             new Vector(pos.x, pos.y), //top-left
-            new Vector(this.width, pos.y), //top-right
-            new Vector(this.width, this.height), //bottom-right
-            new Vector(pos.x, this.height) //bottom-left
+            new Vector(pos.x + this.width, pos.y), //top-right
+            new Vector(pos.x + this.width, pos.y + this.height), //bottom-right
+            new Vector(pos.x, pos.y + this.height) //bottom-left
         ]);
     },
 

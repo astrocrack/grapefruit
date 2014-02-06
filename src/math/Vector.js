@@ -416,8 +416,14 @@ inherit(Vector, Object, {
      * @method normalize
      * @return {Vector} Returns the normalized vector
      */
-    normalize: function() {
-        return this.divideScalar(this.length());
+    normalize: function(length) {
+        if(length === undefined)
+            length = 1;
+
+        var curr = this.length(),
+            scale = curr !== 0 ? length / curr : 0;
+
+        return this.multiplyScalar(scale);
     },
     /**
      * Calculates the distance to the passed vector
@@ -514,22 +520,49 @@ inherit(Vector, Object, {
         return ((v.x === this.x) && (v.y === this.y));
     },
     /**
-     * Returns an array with the components of this vector as the elements
-     *
-     * @method toArray
-     * @return {Vector} Returns an array of [x,y] form
-     */
-    toArray: function () {
-        return [this.x, this.y];
-    },
-    /**
      * Creates a new instance of Vector, with the same components as this vector
      *
      * @method clone
      * @return {Vector} Returns a new Vector with the same values
      */
-    clone: function () {
+    clone: function() {
         return new Vector(this.x, this.y);
+    },
+    /**
+     * Returns an array with the components of this vector as the elements
+     *
+     * @method toArray
+     * @return {Array<Number>} Returns an array of [x,y] form
+     */
+    toArray: function() {
+        return [this.x, this.y];
+    },
+    /**
+     * Returns a string representation of the vector
+     *
+     * @method toString
+     * @return {String} Returns a string in the form (x, y)
+     */
+    toString: function() {
+        return '(' + this.x + ', ' + this.y + ')';
+    },
+    /**
+     * Returns a json representation of the vector
+     *
+     * @method toJSON
+     * @return {Object} Returns an object that can be json stringified to represent the vector
+     */
+    toJSON: function() {
+        return { __class: 'Vector', x: this.x, y: this.y };
+    },
+    /**
+     * Returns a string to use as a key in a hash, that repsents this vector
+     *
+     * @method toHashkey
+     * @return {String} Returns a string that can be used to key this vector in a hash
+     */
+    toHashkey: function() {
+        return this.x + '_' + this.y;
     }
 });
 

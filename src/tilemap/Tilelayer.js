@@ -1,4 +1,5 @@
 var SpriteBatch = require('../display/SpriteBatch'),
+    TiledGeom = require('../math/TiledGeom'),
     Rectangle = require('../geom/Rectangle'),
     Vector = require('../math/Vector'),
     Texture = require('../display/Texture'),
@@ -133,6 +134,14 @@ var Tilelayer = function(map, layer) {
     this._buffered = { left: false, right: false, top: false, bottom: false };
     this._panDelta = new Vector();
     this._rendered = new Rectangle();
+
+    if(this.name === 'collision') {
+        console.log('checking', this);
+        var self = this;
+        var autogeom = new TiledGeom(this);
+
+        this.geom = autogeom.create();
+    }
 };
 
 inherit(Tilelayer, SpriteBatch, {
